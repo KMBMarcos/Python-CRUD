@@ -37,7 +37,3 @@ Las contribuciones son bienvenidas. Si encuentras algún error, tienes alguna su
 ## Licencia
 
 Este proyecto se distribuye bajo la licencia [MIT](LICENSE). Si utilizas este código como base para tus propios proyectos, ten en cuenta los términos de la licencia.
-
----
-
-¡Esto es solo un ejemplo! Asegúrate de personalizar el README según tus necesidades, agregando detalles adicionales sobre tu proyecto y proporcionando instrucciones claras para configurar y ejecutar la aplicación.
