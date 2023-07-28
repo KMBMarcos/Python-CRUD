@@ -12,10 +12,10 @@ app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_DB"] = "system"
 mysql = MySQL(app)
 
-#Esto esta obteniendo tipos de datos GET
+#Esto esta obteniendo tipos de datos GET | busqueda de cliente
 @app.route("/api/customers/<int:id>") 
 @cross_origin()
-def getCustomer(id):
+async def getCustomer(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT id, first_name,last_name,email,phone,address FROM customers WHERE id=" + str(id))
     data = cur.fetchall()
@@ -31,10 +31,10 @@ def getCustomer(id):
                     }
     return jsonify(content)
 
-#Esto esta obteniendo tipos de datos GET
+#Esto esta obteniendo tipos de datos GET | Mostrar todos los clientes
 @app.route("/api/customers") 
 @cross_origin()
-def getAllCustomers():
+async def getAllCustomers():
     cur = mysql.connection.cursor()
     cur.execute("SELECT id, first_name,last_name,email,phone,address FROM customers;")
     data = cur.fetchall()
@@ -51,20 +51,21 @@ def getAllCustomers():
         result.append(content)
     return jsonify(result)
 
-#Esto esta obteniendo tipos de datos POST, nuevas entidades
+#Esto esta obteniendo tipos de datos POST, Creacion de clientes
 @app.route("/api/customers", methods=["POST"]) 
 @cross_origin()
-def AddCustomer():
+async def AddCustomer():
     if "id" in request.json:
         modifyCustomer()
+        return {"message":"Customer modified"}
     else:
         addCustomer()
-    return "Ok"
+        return {"message":"Customer created"}
 
 #Esto esta obteniendo tipos de datos POST, nuevas entidades
 @app.route("/api/customers", methods=["POST"]) 
 @cross_origin()
-def addCustomer():
+async def addCustomer():
    cur = mysql.connection.cursor()
    cur.execute("INSERT INTO `customers` (`id`, `first_name`, `Last_name`, `email`, `phone`, `address`) VALUES (NULL, %s, %s, %s, %s, %s);", 
                 (request.json["first_name"], request.json["last_name"], request.json["email"], request.json["phone"], request.json["address"]))
@@ -74,7 +75,7 @@ def addCustomer():
 #Esto esta obteniendo tipos de datos PUT, actualizacion de entidades
 @app.route("/api/customers", methods=["PUT"]) 
 @cross_origin()
-def modifyCustomer():
+async def modifyCustomer():
    cur = mysql.connection.cursor()
    cur.execute("UPDATE `customers` SET `first_name` = %s, `Last_name` = %s, `email` = %s, `phone` = %s, `address` = %s WHERE `customers`.`id` = %s;", 
                 (request.json["first_name"], request.json["last_name"], request.json["email"], request.json["phone"], request.json["address"], request.json["id"]))
@@ -84,7 +85,7 @@ def modifyCustomer():
 #Esto esta obteniendo tipos de datos POST
 @app.route("/api/customers/<int:id>", methods=["DELETE"]) 
 @cross_origin()
-def removeCustomer(id):
+async def removeCustomer(id):
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM `customers` WHERE `customers`.`id` = " + str(id) + ";")
     mysql.connection.commit()
@@ -93,7 +94,7 @@ def removeCustomer(id):
 
 @app.route("/")
 @cross_origin()
-def index():
+async def index():
     return render_template("index.html") 
 
 if __name__ =="__main__":
