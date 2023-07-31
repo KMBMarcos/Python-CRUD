@@ -8,9 +8,9 @@ Este repositorio contiene un ejemplo de una aplicación CRUD (Create, Read, Upda
 
 Antes de ejecutar la aplicación, asegúrate de tener los siguientes requisitos previos instalados en tu sistema:
 
-- Python (versión 3.10 o superior)
-- Flask (versión 2.0.1 o superior)
-- MySQL Server (versión 5.7 o superior)
+- Python
+- Framework Flask
+- MySQL Server
 
 ## Funcionalidades
 
