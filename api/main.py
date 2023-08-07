@@ -3,6 +3,7 @@ from flask import Flask, render_template,jsonify,request
 from flask_mysqldb import MySQL
 from flask_cors import CORS, cross_origin 
 
+# Inicializando importaciones
 app = Flask(__name__)
 cors = CORS(app)
 app.config["CORS_HEADERS"] = "Content-Type"
@@ -12,10 +13,10 @@ app.config["MYSQL_HOST"] = "localhost"
 app.config["MYSQL_DB"] = "system"
 mysql = MySQL(app)
 
-#Esto esta obteniendo tipos de datos GET | busqueda de cliente
+#Esto esta obteniendo tipos de datos GET | búsqueda de cliente especifico
 @app.route("/api/customers/<int:id>") 
 @cross_origin()
-async def getCustomer(id):
+def getCustomer(id):
     cur = mysql.connection.cursor()
     cur.execute("SELECT id, first_name,last_name,email,phone,address FROM customers WHERE id=" + str(id))
     data = cur.fetchall()
@@ -34,7 +35,7 @@ async def getCustomer(id):
 #Esto esta obteniendo tipos de datos GET | Mostrar todos los clientes
 @app.route("/api/customers") 
 @cross_origin()
-async def getAllCustomers():
+def getAllCustomers():
     cur = mysql.connection.cursor()
     cur.execute("SELECT id, first_name,last_name,email,phone,address FROM customers;")
     data = cur.fetchall()
@@ -51,10 +52,10 @@ async def getAllCustomers():
         result.append(content)
     return jsonify(result)
 
-#Esto esta obteniendo tipos de datos POST, Creacion de clientes
+#Esto esta obteniendo tipos de datos POST | Creacion de clientes
 @app.route("/api/customers", methods=["POST"]) 
 @cross_origin()
-async def AddCustomer():
+def AddCustomer():
     if "id" in request.json:
         modifyCustomer()
         return {"message":"Customer modified"}
@@ -65,7 +66,7 @@ async def AddCustomer():
 #Esto esta obteniendo tipos de datos POST, nuevas entidades
 @app.route("/api/customers", methods=["POST"]) 
 @cross_origin()
-async def addCustomer():
+def addCustomer():
    cur = mysql.connection.cursor()
    cur.execute("INSERT INTO `customers` (`id`, `first_name`, `Last_name`, `email`, `phone`, `address`) VALUES (NULL, %s, %s, %s, %s, %s);", 
                 (request.json["first_name"], request.json["last_name"], request.json["email"], request.json["phone"], request.json["address"]))
@@ -75,7 +76,7 @@ async def addCustomer():
 #Esto esta obteniendo tipos de datos PUT, actualizacion de entidades
 @app.route("/api/customers", methods=["PUT"]) 
 @cross_origin()
-async def modifyCustomer():
+def modifyCustomer():
    cur = mysql.connection.cursor()
    cur.execute("UPDATE `customers` SET `first_name` = %s, `Last_name` = %s, `email` = %s, `phone` = %s, `address` = %s WHERE `customers`.`id` = %s;", 
                 (request.json["first_name"], request.json["last_name"], request.json["email"], request.json["phone"], request.json["address"], request.json["id"]))
@@ -85,7 +86,7 @@ async def modifyCustomer():
 #Esto esta obteniendo tipos de datos POST
 @app.route("/api/customers/<int:id>", methods=["DELETE"]) 
 @cross_origin()
-async def removeCustomer(id):
+def removeCustomer(id):
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM `customers` WHERE `customers`.`id` = " + str(id) + ";")
     mysql.connection.commit()
@@ -94,7 +95,7 @@ async def removeCustomer(id):
 
 @app.route("/")
 @cross_origin()
-async def index():
+def index():
     return render_template("index.html") 
 
 if __name__ =="__main__":
