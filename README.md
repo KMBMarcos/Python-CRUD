@@ -1,6 +1,6 @@
 # Python CRUD
 
-EN PROCESO DE MEJORA Y SOLUCION DE PROBLEMAS.
+NO TERMINADO.
 
 Este repositorio contiene un ejemplo de una aplicación CRUD (Create, Read, Update, Delete) desarrollada en Python utilizando el framework Flask y la base de datos MySQL.
 
