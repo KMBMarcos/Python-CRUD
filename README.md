@@ -23,4 +23,4 @@ La aplicación CRUD desarrollada en este proyecto permite realizar las siguiente
 
 ## Contribuciones
 
-Las contribuciones son bienvenidas. Si encuentras algún error, tienes alguna sugerencia o deseas añadir nuevas funcionalidades, puedes crear un *pull request* en este repositorio. Asegúrate de seguir las mejores prácticas de desarrollo de software y de incluir una descripción clara de los cambios realizados.
+Las contribuciones son bienvenidas. Si encuentras algún error, tienes alguna sugerencia o deseas añadir nuevas funcionalidades, puedes crear un *pull request* en este repositorio. Asegúrate de tener buenas prácticas de desarrollo web y de incluir una descripción clara de los cambios realizados.
